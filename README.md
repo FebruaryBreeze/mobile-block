@@ -1,8 +1,16 @@
-# mobile-block [![Build Status](https://travis-ci.com/FebruaryBreeze/mobile-block.svg?branch=master)](https://travis-ci.com/FebruaryBreeze/mobile-block)
+# mobile-block [![Build Status](https://travis-ci.com/FebruaryBreeze/mobile-block.svg?branch=master)](https://travis-ci.com/FebruaryBreeze/mobile-block) [![PyPI version](https://badge.fury.io/py/mobile-block.svg)](https://pypi.org/project/mobile-block/)
 
 MobileNet-style block for PyTorch
 
+### Installation
+
+```bash
+pip install mobile-block
+```
+
 ### Usage
+
+Require Python 3.6+, torch 0.4+.
 
 ```python
 from mobile_block import MobileBlock

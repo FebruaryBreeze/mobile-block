@@ -9,6 +9,7 @@ class MyTestCase(unittest.TestCase):
     def test_mobile_block(self):
         mock_block_id = 'w112_i16_o32_s1_e10_k3_g1'
         block = MobileBlock.factory(mock_block_id)
+        self.assertEqual(block.block_id, mock_block_id)
 
         self.assertEqual(block.input_size, 112)
         self.assertEqual(block.in_channels, 16)
