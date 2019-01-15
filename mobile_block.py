@@ -91,11 +91,14 @@ class MobileBlock(torch.nn.Module):
     T = TypeVar('T', bound='MobileBlock')
 
     @classmethod
-    def factory(cls: Type[T], block_id: str) -> T:
+    def factory(cls: Type[T], block_id: str,
+                batch_norm_2d: Type[torch.nn.BatchNorm2d] = torch.nn.BatchNorm2d,
+                relu: Type[torch.nn.ReLU] = nn.ReLU) -> T:
         parse = re.findall(r'w(\d+)_i(\d+)_o(\d+)_s(\d+)_e(\d+)_k(\d+)_g(\d+)', block_id.lower())
         if not parse:
             raise ValueError(f'ParseError: {block_id}')
         input_size, in_channels, out_channels, stride, expansion, kernel, groups = (int(value) for value in parse[0])
 
         return cls(input_size=input_size, in_channels=in_channels, out_channels=out_channels,
-                   stride=stride, expansion=expansion, kernel=kernel, groups=groups)
+                   stride=stride, expansion=expansion, kernel=kernel, groups=groups,
+                   batch_norm_2d=batch_norm_2d, relu=relu)
