@@ -10,7 +10,7 @@ from setuptools import setup
 name = 'mobile_block'
 setup(
     name=name,
-    version='0.0.1',
+    version='0.0.2',
     description='MobileNet-style blocks for PyTorch',
     url=f'https://github.com/SF-Zhou/{name.replace("_", "-")}',
     author='SF-Zhou',

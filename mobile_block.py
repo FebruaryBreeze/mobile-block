@@ -40,7 +40,8 @@ class MobileBlock(torch.nn.Module):
                  kernel: int = 3,
                  groups: int = 1,
                  batch_norm_2d: Type[torch.nn.BatchNorm2d] = torch.nn.BatchNorm2d,
-                 relu: Type[torch.nn.ReLU] = nn.ReLU
+                 relu: Type[torch.nn.ReLU] = nn.ReLU,
+                 residual: bool = True
                  ):
         super().__init__()
 
@@ -51,6 +52,7 @@ class MobileBlock(torch.nn.Module):
         self.expansion = expansion
         self.kernel = kernel
         self.groups = groups
+        self.residual = residual and stride == 1 and in_channels == out_channels
 
         inner_channels = in_channels * expansion
         self.block = nn.Sequential(
@@ -70,7 +72,10 @@ class MobileBlock(torch.nn.Module):
         )
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
-        return self.block(x)
+        if self.residual:
+            return self.block(x) + x
+        else:
+            return self.block(x)
 
     @property
     def block_id(self) -> str:
@@ -93,7 +98,7 @@ class MobileBlock(torch.nn.Module):
     @classmethod
     def factory(cls: Type[T], block_id: str,
                 batch_norm_2d: Type[torch.nn.BatchNorm2d] = torch.nn.BatchNorm2d,
-                relu: Type[torch.nn.ReLU] = nn.ReLU) -> T:
+                relu: Type[torch.nn.Module] = nn.ReLU, residual: bool = True) -> T:
         parse = re.findall(r'w(\d+)_i(\d+)_o(\d+)_s(\d+)_e(\d+)_k(\d+)_g(\d+)', block_id.lower())
         if not parse:
             raise ValueError(f'ParseError: {block_id}')
@@ -101,4 +106,4 @@ class MobileBlock(torch.nn.Module):
 
         return cls(input_size=input_size, in_channels=in_channels, out_channels=out_channels,
                    stride=stride, expansion=expansion, kernel=kernel, groups=groups,
-                   batch_norm_2d=batch_norm_2d, relu=relu)
+                   batch_norm_2d=batch_norm_2d, relu=relu, residual=residual)
