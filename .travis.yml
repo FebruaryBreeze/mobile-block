@@ -1,0 +1,17 @@
+language: python
+python:
+  - '3.6'
+install:
+  - pip install https://download.pytorch.org/whl/cpu/torch-1.0.0-cp36-cp36m-linux_x86_64.whl
+  - pip install flake8 pytest
+script:
+  - python -m flake8
+  - python -m pytest
+deploy:
+  provider: pypi
+  user: sfzhou
+  on:
+    branch: master
+  skip_existing: true
+  password:
+    secure: UXvKTViHp7hxXrPY2NXyuweR2PgSlX9phDy3iezjVdyom0jWW9WCWVoUb6NE5FG+o6Wrf3rdUQNfWrKWLO4w+iqjP3B/8ZGrKo7OWXXP+8Yd02uiKSc9dH8sdghHYo8HEe0PCW1hmWcHaw6YFkTI2yjOPGvpS+7qEPgJ+AXdnAiUL9pkyW0i3rF+WK3hmKvVkhl2s+D4zGGegpIPCRajiTK/NqnavKMqx89gBZ83rPgT1WWF4vexjJCY/K7X8XzOUR33DvZYCWGgoPoDPqIN/QrbT62s2uC4modbDZ25vgRzBUGxxKfAankY+sdpKrwfI6XKd1o5Q3G48vGbgUbkEllHL8fO7nS9S/tcl2fTZo7rOB+yT72vXUHTsGk21DcqgMz9GsENlyccI9m1zwbS+2rJVSiqx7tNerqmY6ZXHDIoRu41zeIr/qh2u+nNYJCq0C7Gi7b0t1acrctdDKGb0HQHwwnOzvFB2x/Gk53cYrjorOyC7G3JyYQl+ysdn4IzJhHw9igWl/EC2J6g4MGN9tdjCrsMIqYL9R5yKGlaAFHw4FtOQQX/XT5sVMjFv3jPPoqKevF5mLL5z63BtDQ1WPTmcjzqr40uW48Xn3FPEgRAZq3nZesvH0cmYJ9ozYc5QDW3Hr9mQ4PcAtU03frX2T73E3XsDS5AP7AXEwKOHnQ=
